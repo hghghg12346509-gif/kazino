@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>НЕОН ДЮП — Казино (не настоящие деньги)</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05050a;
+  --red:#ff1744;
+  --red-glow:rgba(255,23,68,.7);
+  --blue:#2979ff;
+  --blue-glow:rgba(41,121,255,.6);
+  --white:#f5f5fa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:'Rubik',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+/* фоновая неоновая сетка */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 50% -20%, rgba(255,23,68,.18), transparent 60%),
+    radial-gradient(ellipse at 10% 110%, rgba(41,121,255,.12), transparent 55%),
+    repeating-linear-gradient(0deg,transparent 0 39px,rgba(255,23,68,.05) 39px 40px),
+    repeating-linear-gradient(90deg,transparent 0 39px,rgba(41,121,255,.05) 39px 40px);
+}
+.scanlines{
+  position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.35;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 2px,transparent 2px 4px);
+}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+
+/* ===== HEADER ===== */
+header{text-align:center;padding:24px 0 10px}
+h1.logo{
+  font-family:'Press Start 2P',monospace;font-size:clamp(18px,4vw,34px);letter-spacing:2px;
+  color:var(--red);
+  text-shadow:0 0 8px var(--red-glow),0 0 24px var(--red-glow),0 0 60px var(--red-glow);
+  animation:flicker 4s infinite;
+}
+h1 .b{color:var(--blue);text-shadow:0 0 8px var(--blue-glow),0 0 24px var(--blue-glow),0 0 60px var(--blue-glow)}
+@keyframes flicker{
+  0%,100%{opacity:1} 92%{opacity:1} 93%{opacity:.55} 94%{opacity:1} 96%{opacity:.7} 97%{opacity:1}
+}
+.tagline{margin-top:12px;font-size:13px;color:#9aa0c0;letter-spacing:1px;text-transform:uppercase}
+.badge-fake{
+  display:inline-block;margin-top:10px;padding:4px 12px;border:1px solid var(--blue);
+  border-radius:4px;color:var(--blue);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  box-shadow:0 0 10px var(--blue-glow), inset 0 0 10px rgba(41,121,255,.15);
+}
+
+/* ===== BALANCE BAR ===== */
+.balancebar{
+  margin:26px auto 8px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;
+}
+.balance-box{
+  border:2px solid var(--red);border-radius:8px;padding:12px 26px;background:rgba(255,23,68,.06);
+  box-shadow:0 0 18px var(--red-glow), inset 0 0 18px rgba(255,23,68,.12);
+  text-align:center;min-width:260px;
+}
+.balance-box .lbl{font-size:10px;letter-spacing:3px;color:#ff8ba0;text-transform:uppercase}
+#balance{
+  font-family:'Press Start 2P',monospace;font-size:clamp(16px,3vw,26px);color:var(--white);
+  text-shadow:0 0 10px var(--red-glow);display:block;margin-top:8px;transition:transform .15s;
+}
+#balance.up{animation:popG .4s} #balance.down{animation:popR .4s}
+@keyframes popG{0%{transform:scale(1)}50%{transform:scale(1.15);color:#69f0ae}100%{transform:scale(1)}}
+@keyframes popR{0%{transform:scale(1)}50%{transform:scale(.92);color:var(--red)}100%{transform:scale(1)}}
+.stat-boxes{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.stat{
+  border:1px solid rgba(41,121,255,.6);border-radius:6px;padding:8px 14px;background:rgba(41,121,255,.05);
+  font-size:12px;color:#aab6e8;min-width:110px;text-align:center;box-shadow:0 0 8px rgba(41,121,255,.25)
+}
+.stat b{display:block;font-size:15px;color:var(--white);margin-top:3px}
+#refillBtn{
+  border:1px dashed var(--blue);background:transparent;color:var(--blue);border-radius:6px;
+  padding:10px 14px;font-family:'Rubik';font-size:12px;cursor:pointer;letter-spacing:1px;
+}
+#refillBtn:hover{box-shadow:0 0 14px var(--blue-glow);background:rgba(41,121,255,.1)}
+
+/* ===== TABS ===== */
+.tabs{display:flex;gap:12px;justify-content:center;margin:28px 0 22px;flex-wrap:wrap}
+.tab{
+  font-family:'Press Start 2P',monospace;font-size:11px;letter-spacing:1px;
+  background:transparent;color:#8f96bd;border:2px solid #2a2d45;border-radius:8px;
+  padding:14px 22px;cursor:pointer;transition:.2s;text-transform:uppercase;
+}
+.tab:hover{color:var(--white);border-color:var(--blue);box-shadow:0 0 12px var(--blue-glow)}
+.tab.active{
+  color:var(--red);border-color:var(--red);
+  text-shadow:0 0 8px var(--red-glow);
+  box-shadow:0 0 18px var(--red-glow), inset 0 0 14px rgba(255,23,68,.15);
+  background:rgba(255,23,68,.07);
+}
+.game{display:none;animation:fadeIn .3s}
+.game.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ===== PANELS ===== */
+.panel{
+  border:2px solid #23263d;border-radius:12px;background:rgba(10,10,20,.75);
+  padding:22px;box-shadow:0 0 30px rgba(0,0,0,.6);
+}
+.panel h2{
+  font-family:'Press Start 2P',monospace;font-size:14px;margin-bottom:18px;color:var(--blue);
+  text-shadow:0 0 10px var(--blue-glow);letter-spacing:1px;
+}
+
+/* ставка */
+.betrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.betrow label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9aa0c0}
+.betinput{
+  font-family:'Press Start 2P',monospace;font-size:14px;background:#0a0a14;color:var(--white);
+  border:2px solid var(--blue);border-radius:6px;padding:10px 12px;width:150px;text-align:center;
+  box-shadow:inset 0 0 10px rgba(41,121,255,.2);
+}
+.chipbtns{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  border:1px solid #3a3f63;background:#12142a;color:#cfd3ee;border-radius:6px;
+  padding:8px 12px;font-size:12px;cursor:pointer;font-family:'Rubik';font-weight:600;
+}
+.chip:hover{border-color:var(--red);color:var(--red);box-shadow:0 0 8px var(--red-glow)}
+
+.btn{
+  font-family:'Press Start 2P',monospace;font-size:12px;letter-spacing:1px;cursor:pointer;
+  border-radius:8px;padding:16px 26px;border:2px solid var(--red);color:var(--red);
+  background:rgba(255,23,68,.08);text-transform:uppercase;transition:.15s;
+  box-shadow:0 0 14px rgba(255,23,68,.35), inset 0 0 10px rgba(255,23,68,.1);
+}
+.btn:hover:not(:disabled){color:#fff;background:var(--red);box-shadow:0 0 30px var(--red-glow)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.blue{border-color:var(--blue);color:var(--blue);background:rgba(41,121,255,.08);box-shadow:0 0 14px rgba(41,121,255,.3)}
+.btn.blue:hover:not(:disabled){color:#fff;background:var(--blue);box-shadow:0 0 30px var(--blue-glow)}
+.btn.small{padding:10px 16px;font-size:10px}
+
+.result-line{
+  min-height:26px;margin-top:16px;font-size:15px;font-weight:600;letter-spacing:.5px;text-align:center;
+}
+.result-line.win{color:#69f0ae;text-shadow:0 0 12px rgba(105,240,174,.7)}
+.result-line.lose{color:var(--red);text-shadow:0 0 12px var(--red-glow)}
+.result-line.push{color:#9aa0c0}
+
+/* ===== РУЛЕТКА ===== */
+.wheel-area{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.wheel-holder{position:relative;width:320px;height:320px;margin:0 auto}
+#wheelSvg{width:100%;height:100%;filter:drop-shadow(0 0 18px rgba(255,23,68,.4))}
+.pointer{
+  position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;z-index:2;
+  border-left:14px solid transparent;border-right:14px solid transparent;border-top:24px solid var(--white);
+  filter:drop-shadow(0 0 8px var(--red-glow));
+}
+.hub{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #3a3f63, #0a0a14 70%);
+  border:3px solid var(--red);box-shadow:0 0 20px var(--red-glow);z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:9px;color:var(--red);text-shadow:0 0 6px var(--red-glow);
+}
+.numbers-panel{flex:1;min-width:280px}
+.numgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:16px}
+.numcell{
+  border:none;border-radius:5px;padding:10px 0;font-family:'Press Start 2P',monospace;font-size:10px;
+  cursor:pointer;color:#fff;transition:.15s;opacity:.55;
+}
+.numcell.red{background:#7a0f22} .numcell.black{background:#1c1e2e;border:1px solid #33375a}
+.numcell.green{background:#0d5c2e}
+.numcell.picked{opacity:1;transform:scale(1.08);box-shadow:0 0 14px var(--red-glow);outline:2px solid var(--red)}
+.numcell:hover{opacity:.9}
+.bets-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.outside{
+  flex:1;min-width:90px;text-align:center;padding:12px 6px;border-radius:6px;cursor:pointer;
+  border:2px solid #33375a;background:#0d0f1e;color:#aab0d0;font-size:11px;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;transition:.15s;
+}
+.outside[data-kind=red]{border-color:rgba(255,23,68,.4)}
+.outside.picked{color:#fff;box-shadow:0 0 14px var(--red-glow);border-color:var(--red);background:rgba(255,23,68,.15)}
+.history{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.hist{
+  width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Press Start 2P',monospace;font-size:9px;color:#fff;border:1px solid #444;
+}
+.hist.r{background:#b3122f} .hist.b{background:#181a28} .hist.g{background:#0d7a3d}
+
+/* ===== СЛОТЫ ===== */
+.slot-machine{display:flex;gap:14px;justify-content:center;margin:10px 0 22px}
+.reel{
+  width:110px;height:130px;border:3px solid var(--blue);border-radius:10px;background:#07070f;
+  overflow:hidden;position:relative;box-shadow:inset 0 0 22px rgba(0,0,0,.9),0 0 16px var(--blue-glow);
+}
+.reel-inner{display:flex;flex-direction:column;transition:none}
+.reel .sym{height:130px;display:flex;align-items:center;justify-content:center;font-size:56px}
+.reel.spinning .reel-inner{filter:blur(2px)}
+.paytable{margin-top:20px;font-size:13px;color:#aab0d0}
+.paytable table{width:100%;border-collapse:collapse}
+.paytable td{padding:7px 8px;border-bottom:1px solid #23263d}
+.paytable td.mult{text-align:right;color:var(--red);font-weight:800;text-shadow:0 0 8px var(--red-glow)}
+
+/* ===== КРАШ ===== */
+.crash-layout{display:flex;gap:22px;flex-wrap:wrap}
+.chart-box{flex:1;min-width:300px;position:relative;border:2px solid var(--blue);border-radius:10px;background:#07070f;box-shadow:0 0 16px var(--blue-glow)}
+#crashCanvas{width:100%;display:block;border-radius:8px}
+#crashPoint{
+  position:absolute;width:16px;height:16px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 16px var(--red-glow),0 0 40px var(--red-glow);pointer-events:none;display:none;transform:translate(-50%,-50%);
+}
+.crash-mult{
+  position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Press Start 2P',monospace;font-size:clamp(22px,5vw,40px);color:var(--white);
+  text-shadow:0 0 14px var(--blue-glow);pointer-events:none;
+}
+.crash-mult.crashed{color:var(--red);text-shadow:0 0 14px var(--red-glow),0 0 40px var(--red-glow);animation:shake .4s}
+@keyframes shake{0%,100%{transform:translate(-50%,-50%)}25%{transform:translate(-54%,-50%)}75%{transform:translate(-46%,-50%)}}
+.crash-side{width:260px;display:flex;flex-direction:column;gap:12px}
+.cashout-btn{width:100%}
+.crash-hist{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chx{padding:5px 9px;border-radius:5px;font-size:12px;font-weight:800;border:1px solid #33375a}
+.chx.low{color:#69f0ae;background:rgba(41,121,255,.08)}
+.chx.mid{color:#ffd54f;background:rgba(255,213,79,.08)}
+.chx.high{color:var(--red);background:rgba(255,23,68,.1);text-shadow:0 0 8px var(--red-glow)}
+
+/* ===== TOAST / OVERLAY ===== */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);z-index:60;
+  background:#0d0f1e;border:2px solid var(--red);border-radius:10px;padding:14px 26px;
+  font-family:'Press Start 2P',monospace;font-size:12px;color:var(--white);
+  box-shadow:0 0 24px var(--red-glow);transition:transform .3s;
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#bankrupt{
+  position:fixed;inset:0;z-index:70;background:rgba(3,3,8,.92);display:none;
+  align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;
+}
+#bankrupt.show{display:flex}
+#bankrupt h3{
+  font-family:'Press Start 2P',monospace;font-size:clamp(18px,4vw,30px);color:var(--red);
+  text-shadow:0 0 12px var(--red-glow),0 0 50px var(--red-glow);margin-bottom:18px;animation:flicker 2s infinite;
+}
+#bankrupt p{color:#9aa0c0;margin-bottom:24px;max-width:420px}
+
+footer{text-align:center;margin-top:40px;font-size:11px;color:#5b6080;letter-spacing:1px}
+@media(max-width:700px){
+  .wheel-holder{width:260px;height:260px}
+  .reel{width:84px;height:104px}.reel .sym{height:104px;font-size:40px}
+  .crash-side{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="wrap">
+
+<header>
+  <h1 class="logo">НЕОН <span class="b">ДЮП</span></h1>
+  <div class="tagline">казино · рулетка · слоты · краш</div>
+  <div class="badge-fake">⚠ это НЕ настоящие деньги — просто виртуальные рублики ⚠</div>
+</header>
+
+<!-- БАЛАНС -->
+<div class="balancebar">
+  <div class="balance-box">
+    <span class="lbl">Твой дюп-баланс</span>
+    <span id="balance">300 ₽</span>
+  </div>
+  <div class="stat-boxes">
+    <div class="stat">Всего поставил<b id="statBet">0 ₽</b></div>
+    <div class="stat">Максимум был<b id="statMax">300 ₽</b></div>
+    <div class="stat">Кэшаутов<b id="statWins">0</b></div>
+    <button id="refillBtn" title="Если обнищал — бесплатно вернём 300">↺ Разорился? Взять 300 ещё раз</button>
+  </div>
+</div>
+
+<!-- ТАБЫ -->
+<div class="tabs">
+  <button class="tab active" data-tab="roulette">🎡 Рулетка</button>
+  <button class="tab" data-tab="slots">🎰 Слоты</button>
+  <button class="tab" data-tab="crash">🚀 Краш</button>
+</div>
+
+<!-- ============ РУЛЕТКА ============ -->
+<section class="game active panel" id="roulette">
+  <h2>▶ Неоновая рулетка</h2>
+  <div class="wheel-area">
+    <div>
+      <div class="wheel-holder">
+        <div class="pointer"></div>
+        <svg id="wheelSvg" viewBox="0 0 320 320"></svg>
+        <div class="hub">DUP</div>
+      </div>
+      <div style="text-align:center;margin-top:14px">
+        <button class="btn" id="spinBtn">Крутить!</button>
+      </div>
+    </div>
+    <div class="numbers-panel">
+      <div class="betrow">
+        <label>Ставка</label>
+        <input class="betinput" id="rBet" type="number" value="10" min="1">
+        <div class="chipbtns">
+          <button class="chip" data-add="rBet" data-v="10">+10</button>
+          <button class="chip" data-add="rBet" data-v="50">+50</button>
+          <button class="chip" data-add="rBet" data-v="100">+100</button>
+          <button class="chip" data-set="rBet" data-v="half">½</button>
+          <button class="chip" data-set="rBet" data-v="max">MAX</button>
+        </div>
+      </div>
+      <div class="bets-row">
+        <div class="outside picked" data-kind="red">Красное ×2</div>
+        <div class="outside" data-kind="black">Чёрное ×2</div>
+        <div class="outside" data-kind="even">Чёт ×2</div>
+        <div class="outside" data-kind="odd">Нечет ×2</div>
+      </div>
+      <div style="font-size:11px;color:#9aa0c0;letter-spacing:1px;margin-bottom:8px">ИЛИ СТАВЬ НА ЧИСЛО (×36):</div>
+      <div class="numgrid" id="numGrid"></div>
+      <div style="font-size:11px;color:#9aa0c0;letter-spacing:1px">История:</div>
+      <div class="history" id="rHistory"></div>
+    </div>
+  </div>
+  <div class="result-line" id="rResult">Выбери ставку и крути колесо 🎡</div>
+</section>
+
+<!-- ============ СЛОТЫ ============ -->
+<section class="game panel" id="slots">
+  <h2>▶ Дюп-машина 3000</h2>
+  <div class="slot-machine">
+    <div class="reel" id="reel0"><div class="reel-inner"></div></div>
+    <div class="reel" id="reel1"><div class="reel-inner"></div></div>
+    <div class="reel" id="reel2"><div class="reel-inner"></div></div>
+  </div>
+  <div class="betrow" style="justify-content:center">
+    <label>Ставка</label>
+    <input class="betinput" id="sBet" type="number" value="10" min="1">
+    <div class="chipbtns">
+      <button class="chip" data-add="sBet" data-v="10">+10</button>
+      <button class="chip" data-add="sBet" data-v="50">+50</button>
+      <button class="chip" data-set="sBet" data-v="half">½</button>
+      <button class="chip" data-set="sBet" data-v="max">MAX</button>
+    </div>
+    <button class="btn blue" id="pullBtn">Дёрнуть рычаг 🕹</button>
+  </div>
+  <div class="result-line" id="sResult">Три символа в ряд = жирный кэш 💸</div>
+  <div class="paytable">
+    <table>
+      <tr><td>💎 💎 💎 &nbsp; АЛМАЗЫ</td><td class="mult">×20 — джекпот, ты легенда</td></tr>
+      <tr><td>7️⃣ 7️⃣ 7️⃣ &nbsp; СЕМЁРКИ</td><td class="mult">×10</td></tr>
+      <tr><td>🔔 🔔 🔔 &nbsp; КОЛОКОЛЬЧИКИ</td><td class="mult">×6</td></tr>
+      <tr><td>🍒 🍒 🍒 &nbsp; ВИШЕНКИ</td><td class="mult">×4</td></tr>
+      <tr><td>⭐ ⭐ ⭐ &nbsp; ЗВЁЗДОЧКИ</td><td class="mult">×3</td></tr>
+      <tr><td>любые ДВА одинаковых</td><td class="mult">×1.5 (возврат + чуть-чуть)</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ КРАШ ============ -->
+<section class="game panel" id="crash">
+  <h2>▶ Ракета дюпа 🚀</h2>
+  <div class="crash-layout">
+    <div class="chart-box">
+      <canvas id="crashCanvas" width="640" height="360"></canvas>
+      <div class="crash-mult" id="crashMult">×1.00</div>
+      <div id="crashPoint"></div>
+    </div>
+    <div class="crash-side">
+      <div class="betrow" style="margin-bottom:4px">
+        <label>Ставка</label>
+        <input class="betinput" id="cBet" type="number" value="10" min="1">
+      </div>
+      <div class="chipbtns">
+        <button class="chip" data-add="cBet" data-v="10">+10</button>
+        <button class="chip" data-add="cBet" data-v="50">+50</button>
+        <button class="chip" data-set="cBet" data-v="half">½</button>
+        <button class="chip" data-set="cBet" data-v="max">MAX</button>
+      </div>
+      <button class="btn blue" id="launchBtn">🚀 Запустить ракету</button>
+      <button class="btn cashout-btn" id="cashoutBtn" disabled>💰 Забрать ×—</button>
+      <div style="font-size:11px;color:#9aa0c0;letter-spacing:1px">Раунды:</div>
+      <div class="crash-hist" id="cHistory"></div>
+      <div style="font-size:11px;color:#5b6080;line-height:1.5">Ракета летит и множитель растёт. Рванёт — всё сгорело. Успей забрать!</div>
+    </div>
+  </div>
+  <div class="result-line" id="cResult">Поставил — запустил — жадничаешь 😈</div>
+</section>
+
+<footer>НЕОН ДЮП © 2026 · все рублики виртуальные · играй ответственно (то есть вообще не на реальные деньги)</footer>
+</div>
+
+<div id="toast"></div>
+<div id="bankrupt">
+  <h3>ТЫ ПОЛНЫЙ НИЩИЙ 💸</h3>
+  <p>Казино забрало все твои виртуальные денежки. Но это же не настоящие деньги — держи ещё 300 и иди дюпать дальше!</p>
+  <button class="btn" id="rescueBtn">ДАЙТЕ ЕЩЁ 300 🙏</button>
+</div>
+
+<script>
+/* ================= СОСТОЯНИЕ ================= */
+const SAVE_KEY = 'neon_dup_casino_v1';
+let state = { balance:300, totalBet:0, maxBalance:300, wins:0 };
+try{
+  const s = JSON.parse(localStorage.getItem(SAVE_KEY));
+  if(s && typeof s.balance==='number') state = Object.assign(state,s);
+}catch(e){}
+function save(){ localStorage.setItem(SAVE_KEY, JSON.stringify(state)); }
+
+const $ = id => document.getElementById(id);
+const fmt = n => Math.floor(n).toLocaleString('ru-RU')+' ₽';
+
+let prevBal = state.balance;
+function renderBalance(){
+  $('balance').textContent = fmt(state.balance);
+  $('statBet').textContent = fmt(state.totalBet);
+  $('statMax').textContent = fmt(state.maxBalance);
+  $('statWins').textContent = state.wins;
+  if(state.balance>prevBal){ $('balance').classList.remove('down'); $('balance').classList.add('up'); }
+  else if(state.balance<prevBal){ $('balance').classList.remove('up'); $('balance').classList.add('down'); }
+  setTimeout(()=>$('balance').classList.remove('up','down'),450);
+  prevBal = state.balance;
+  if(state.balance>state.maxBalance) state.maxBalance = state.balance;
+  save();
+  if(state.balance<=0) $('bankrupt').classList.add('show');
+}
+function addMoney(x){ state.balance += x; renderBalance(); }
+function takeBet(bet){
+  bet = Math.min(Math.floor(bet), Math.floor(state.balance));
+  if(bet<=0){ toast('Нет денег на ставку!'); return 0; }
+  state.balance -= bet; state.totalBet += bet; renderBalance();
+  return bet;
+}
+function toast(msg){
+  const t=$('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove('show'),2200);
+}
+$('refillBtn').onclick = ()=>{ state.balance+=300; renderBalance(); toast('+300 виртуальных, не благодарите'); };
+$('rescueBtn').onclick = ()=>{ $('bankrupt').classList.remove('show'); state.balance+=300; renderBalance(); };
+
+/* чипы ставок */
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  const inp=$(c.dataset.add||c.dataset.set);
+  let v=parseInt(inp.value)||0;
+  if(c.dataset.add) v+=parseInt(c.dataset.v);
+  else if(c.dataset.v==='half') v=Math.floor(v/2);
+  else if(c.dataset.v==='max') v=Math.floor(state.balance);
+  inp.value=Math.max(1,v);
+});
+
+/* табы */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.game').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); $(t.dataset.tab).classList.add('active');
+});
+
+/* ================= РУЛЕТКА ================= */
+const WHEEL = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+const REDS = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+const SEG = 360/WHEEL.length, CX=160, CY=160, R=150;
+let rPick = {kind:'red'}; // red|black|even|odd|number
+
+function polar(a,r){ const rad=(a-90)*Math.PI/180; return [CX+r*Math.cos(rad), CY+r*Math.sin(rad)]; }
+function arcPath(a0,a1,ri,ro){
+  const [x1,y1]=polar(a0,ro),[x2,y2]=polar(a1,ro),[x3,y3]=polar(a1,ri),[x4,y4]=polar(a0,ri);
+  const la = (a1-a0)>180?1:0;
+  return `M${x1} ${y1} A${ro} ${ro} 0 ${la} 1 ${x2} ${y2} L${x3} ${y3} A${ri} ${ri} 0 ${la} 0 ${x4} ${y4} Z`;
+}
+(function buildWheel(){
+  const svg=$('wheelSvg'); let html='';
+  WHEEL.forEach((n,i)=>{
+    const a0=i*SEG, a1=(i+1)*SEG;
+    const fill = n===0 ? '#0d7a3d' : (REDS.has(n)?'#c1132f':'#15172a');
+    const stroke = n===0?'#2eff8a':(REDS.has(n)?'#ff1744':'#3a3f63');
+    html+=`<path d="${arcPath(a0,a1,52,R)}" fill="${fill}" stroke="${stroke}" stroke-width="1"/>`;
+    const mid=a0+SEG/2, [tx,ty]=polar(mid,(52+R)/2);
+    html+=`<text x="${tx}" y="${ty}" fill="#fff" font-size="11" font-family="'Press Start 2P',monospace" text-anchor="middle" dominant-baseline="middle" transform="rotate(${mid} ${tx} ${ty})">${n}</text>`;
+  });
+  html+=`<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="#ff1744" stroke-width="4" opacity="0.8"/>`;
+  svg.innerHTML=html;
+})();
+(function buildNumbers(){
+  const g=$('numGrid');
+  for(let n=1;n<=36;n++){
+    const d=document.createElement('button');
+    d.className='numcell '+(REDS.has(n)?'red':'black');
+    d.textContent=n; d.dataset.n=n;
+    d.onclick=()=>{ pick({kind:'number',n}); };
+    g.appendChild(d);
+  }
+  const zero=document.createElement('button');
+  zero.className='numcell green'; zero.textContent='0'; zero.style.gridColumn='span 6';
+  zero.onclick=()=>pick({kind:'number',n:0});
+  g.appendChild(zero);
+})();
+document.querySelectorAll('.outside').forEach(o=>o.onclick=()=>pick({kind:o.dataset.kind}));
+function pick(p){
+  rPick=p;
+  document.querySelectorAll('.outside').forEach(o=>o.classList.toggle('picked', o.dataset.kind===p.kind));
+  document.querySelectorAll('.numcell').forEach(c=>c.classList.toggle('picked', p.kind==='number' && +c.dataset.n===p.n));
+}
+pick({kind:'red'});
+
+let wheelAngle=0, spinning=false;
+$('spinBtn').onclick=()=>{
+  if(spinning) return;
+  const bet=takeBet(parseFloat($('rBet').value));
+  if(!bet) return;
+  spinning=true; $('spinBtn').disabled=true;
+  $('rResult').className='result-line push'; $('rResult').textContent='Колесо крутится... 🎡';
+  const idx = Math.floor(Math.random()*WHEEL.length);
+  const target = -(idx*SEG + SEG/2) - wheelAngle%360 + 360*6 + (Math.random()*SEG*0.6 - SEG*0.3);
+  const start=wheelAngle, dur=4200, t0=performance.now();
+  function anim(now){
+    const t=Math.min(1,(now-t0)/dur);
+    const e=1-Math.pow(1-t,4);
+    $('wheelSvg').style.transform=`rotate(${start+target*e}deg)`;
+    if(t<1) requestAnimationFrame(anim);
+    else{
+      wheelAngle=(start+target)%360;
+      finishSpin(WHEEL[idx], bet);
+    }
+  }
+  requestAnimationFrame(anim);
+};
+function winFor(num,bet){
+  const p=rPick;
+  if(p.kind==='number') return num===p.n ? bet*36 : 0;
+  if(num===0) return 0;
+  if(p.kind==='red')  return REDS.has(num) ? bet*2 : 0;
+  if(p.kind==='black')return !REDS.has(num) ? bet*2 : 0;
+  if(p.kind==='even') return num%2===0 ? bet*2 : 0;
+  if(p.kind==='odd')  return num%2===1 ? bet*2 : 0;
+  return 0;
+}
+function finishSpin(num,bet){
+  spinning=false; $('spinBtn').disabled=false;
+  const win=winFor(num,bet);
+  const el=$('rResult');
+  if(win>0){ addMoney(win); state.wins++; renderBalance();
+    el.className='result-line win'; el.textContent=`🎉 Выпало ${num}! Ты в плюсе на ${fmt(win-bet)} (получил ${fmt(win)})`;
+    confettiBurst();
+  } else {
+    el.className='result-line lose'; el.textContent=`💀 Выпало ${num}. Казино говорит «спасибо за дюп» (-${fmt(bet)})`;
+  }
+  const h=$('rHistory');
+  const d=document.createElement('div');
+  d.className='hist '+(num===0?'g':(REDS.has(num)?'r':'b')); d.textContent=num;
+  h.prepend(d); while(h.children.length>12) h.lastChild.remove();
+}
+
+/* ================= СЛОТЫ ================= */
+const SYMS=['🍒','⭐','🔔','7️⃣','💎'];
+const WEIGHTS=[34,28,20,12,6];
+function spinSym(){
+  const tot=WEIGHTS.reduce((a,b)=>a+b); let r=Math.random()*tot;
+  for(let i=0;i<SYMS.length;i++){ if((r-=WEIGHTS[i])<0) return SYMS[i]; }
+  return SYMS[0];
+}
+const MULT={'💎':20,'7️⃣':10,'🔔':6,'🍒':4,'⭐':3};
+// отрисовать ленты
+[0,1,2].forEach(i=>{
+  const inner=$('reel'+i).querySelector('.reel-inner');
+  inner.innerHTML=Array.from({length:20},()=>`<div class="sym">${SYMS[Math.floor(Math.random()*SYMS.length)]}</div>`).join('');
+});
+let slotBusy=false;
+$('pullBtn').onclick=()=>{
+  if(slotBusy) return;
+  const bet=takeBet(parseFloat($('sBet').value));
+  if(!bet) return;
+  slotBusy=true; $('pullBtn').disabled=true;
+  $('sResult').className='result-line push'; $('sResult').textContent='Катушки крутятся... 🎰';
+  const finals=[spinSym(),spinSym(),spinSym()];
+  const H=$('reel0').clientHeight || 130;
+  [0,1,2].forEach(i=>{
+    const reel=$('reel'+i), inner=reel.querySelector('.reel-inner');
+    reel.classList.add('spinning');
+    inner.innerHTML+=finals.map(s=>`<div class="sym">${s}</div>`).join('');
+    const dist=(inner.children.length-1)*H;
+    inner.style.transition='none'; inner.style.transform='translateY(0)';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      inner.style.transition=`transform ${1+i*0.35}s cubic-bezier(.15,.8,.25,1)`;
+      inner.style.transform=`translateY(-${dist}px)`;
+    }));
+    setTimeout(()=>{
+      reel.classList.remove('spinning');
+      inner.innerHTML=Array.from({length:20},()=>`<div class="sym">${SYMS[Math.floor(Math.random()*SYMS.length)]}</div>`).join('')+`<div class="sym">${finals[i]}</div>`;
+      inner.style.transition='none'; inner.style.transform=`translateY(-${19*H}px)`;
+    }, 1000+i*350+60);
+  });
+  setTimeout(()=>{
+    slotBusy=false; $('pullBtn').disabled=false;
+    const [a,b,c]=finals, el=$('sResult');
+    let mult=0;
+    if(a===b&&b===c) mult=MULT[a];
+    else if(a===b||b===c||a===c) mult=1.5;
+    if(mult>0){
+      const win=Math.floor(bet*mult); addMoney(win); state.wins++; renderBalance();
+      el.className='result-line win';
+      el.textContent = mult>=10 ? `👑 ДЖЕКПОТ ${a}${b}${c}! +${fmt(win-bet)}!!!` : `${a} ${b} ${c} → выигрыш ×${mult} = ${fmt(win)}`;
+      confettiBurst();
+    } else {
+      el.className='result-line lose'; el.textContent=`${a} ${b} ${c} — мусорные катушки. -${fmt(bet)}`;
+    }
+  },1800);
+};
+
+/* ================= КРАШ ================= */
+const canvas=$('crashCanvas'), ctx=canvas.getContext('2d');
+let crash={running:false,bet:0,point:1,mult:1,t0:0,cashed:false,crashed:false,pts:[],raf:0};
+function newCrashPoint(){
+  const r=Math.random();
+  // распределение: часто маленькие краши, редко большие
+  const p = 1/(1-r*0.985);
+  return Math.max(1, Math.min(p, 60));
+}
+function drawChart(){
+  const w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);
+  // сетка
+  ctx.strokeStyle='rgba(41,121,255,.15)'; ctx.lineWidth=1;
+  for(let gx=0;gx<w;gx+=40){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,h);ctx.stroke();}
+  for(let gy=0;gy<h;gy+=40){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(w,gy);ctx.stroke();}
+  if(crash.pts.length<2) return;
+  const maxT=Math.max(2,crash.pts[crash.pts.length-1][0]);
+  const maxM=Math.max(2,crash.pts[crash.pts.length-1][1]);
+  const X=t=>t/maxT*(w-20)+10, Y=m=>h-10-(m-1)/(maxM-1)*(h-20);
+  ctx.beginPath(); ctx.moveTo(X(0),Y(1));
+  crash.pts.forEach(([t,m])=>ctx.lineTo(X(t),Y(m)));
+  ctx.lineTo(X(crash.pts[crash.pts.length-1][0]),Y(1)); ctx.closePath();
+  ctx.fillStyle=crash.cashed?'rgba(105,240,174,.12)':(crash.crashed?'rgba(255,23,68,.15)':'rgba(41,121,255,.12)');
+  ctx.fill();
+  ctx.beginPath(); ctx.moveTo(X(0),Y(1));
+  crash.pts.forEach(([t,m])=>ctx.lineTo(X(t),Y(m)));
+  ctx.strokeStyle=crash.crashed?'#ff1744':'#2979ff'; ctx.lineWidth=3;
+  ctx.shadowColor=crash.crashed?'#ff1744':'#2979ff'; ctx.shadowBlur=14;
+  ctx.stroke(); ctx.shadowBlur=0;
+  const pt=$('crashPoint');
+  const last=crash.pts[crash.pts.length-1];
+  pt.style.display='block';
+  pt.style.left=X(last[0])/w*100+'%';
+  pt.style.top=Y(last[1])/h*100+'%';
+  pt.style.background=crash.crashed?'#ff1744':'#fff';
+}
+$('launchBtn').onclick=()=>{
+  if(crash.running) return;
+  const bet=takeBet(parseFloat($('cBet').value));
+  if(!bet) return;
+  crash={running:true,bet,point:newCrashPoint(),mult:1,t0:performance.now(),cashed:false,crashed:false,pts:[[0,1]]};
+  $('launchBtn').disabled=true; $('cashoutBtn').disabled=false;
+  $('cashoutBtn').textContent='💰 Забрать ×1.00';
+  $('cResult').className='result-line push'; $('cResult').textContent='Ракета летит... жадность — твой враг 😈';
+  $('crashMult').classList.remove('crashed');
+  loop();
+};
+function loop(){
+  const t=(performance.now()-crash.t0)/1000;
+  crash.mult=Math.pow(Math.E, 0.28*t); // экспонента
+  if(crash.mult>=crash.point){ crash.mult=crash.point; doCrash(); return; }
+  $('crashMult').textContent='×'+crash.mult.toFixed(2);
+  if(!crash.cashed) $('cashoutBtn').textContent='💰 Забрать ×'+crash.mult.toFixed(2);
+  crash.pts.push([t,crash.mult]);
+  if(t>14){ doCrash(); return; } // таймаут раунда
+  drawChart();
+  crash.raf=requestAnimationFrame(loop);
+}
+function doCrash(){
+  cancelAnimationFrame(crash.raf);
+  crash.running=false; crash.crashed=true;
+  $('launchBtn').disabled=false; $('cashoutBtn').disabled=true;
+  $('crashMult').classList.add('crashed');
+  $('crashMult').textContent='×'+crash.point.toFixed(2)+' 💥';
+  drawChart();
+  if(!crash.cashed){
+    $('cResult').className='result-line lose';
+    $('cResult').textContent=`💥 Ракета рванула на ×${crash.point.toFixed(2)}. Ты потерял ${fmt(crash.bet)}`;
+  }
+  pushCHist(crash.point,false);
+}
+$('cashoutBtn').onclick=()=>{
+  if(!crash.running||crash.cashed) return;
+  crash.cashed=true;
+  const win=Math.floor(crash.bet*crash.mult);
+  addMoney(win); state.wins++; renderBalance();
+  $('cashoutBtn').disabled=true;
+  $('cashoutBtn').textContent='✅ Забрано ×'+crash.mult.toFixed(2);
+  $('cResult').className='result-line win';
+  $('cResult').textContent=`😎 Ты забрал ${fmt(win)} на ×${crash.mult.toFixed(2)}. Красавчик!`;
+  pushCHist(crash.mult,true);
+};
+function pushCHist(m,cashed){
+  const h=$('cHistory');
+  const d=document.createElement('div');
+  d.className='chx '+(m<2?'low':(m<10?'mid':'high'));
+  d.textContent='×'+m.toFixed(2)+(cashed?' ✔':'');
+  h.prepend(d); while(h.children.length>10) h.lastChild.remove();
+}
+drawChart();
+
+/* ================= КОНФЕТТИ (неоновое) ================= */
+function confettiBurst(){
+  const cols=['#ff1744','#2979ff','#ffffff','#69f0ae'];
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');
+    const size=4+Math.random()*7;
+    p.style.cssText=`position:fixed;top:${30+Math.random()*30}%;left:${20+Math.random()*60}%;width:${size}px;height:${size}px;background:${cols[i%4]};z-index:80;pointer-events:none;box-shadow:0 0 8px ${cols[i%4]};`;
+    document.body.appendChild(p);
+    const dx=(Math.random()-.5)*400, dy=300+Math.random()*400, rot=Math.random()*720;
+    p.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`,opacity:0}],
+      {duration:1200+Math.random()*800,easing:'cubic-bezier(.15,.8,.4,1)'}).onfinish=()=>p.remove();
+  }
+}
+
+renderBalance();
+</script>
+</body>
+</html>
